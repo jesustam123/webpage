@@ -1,69 +1,77 @@
 import React, { useEffect, useState } from "react";
 
-const BACKGROUND_URL = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80"; // Cambia por la URL que quieras
-const NEXT_PAGE = "/otra-pagina"; // Cambia por la ruta a donde quieres ir
+// Cambia la URL de la imagen de fondo aquí:
+const BACKGROUND_IMAGE_URL =
+  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80";
 
-const containerStyle = {
-  minHeight: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundImage: `url(${BACKGROUND_URL})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  color: "#fff",
-  textShadow: "0 2px 8px rgba(0,0,0,0.5)",
-};
+// Cambia la URL de destino aquí:
+const DESTINATION_URL = "https://ejemplo.com";
 
-const boxStyle = {
-  background: "rgba(0,0,0,0.6)",
-  borderRadius: "18px",
-  padding: "2.5rem 3.5rem",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-};
+const COUNTER_KEY = "visit_counter";
 
-const buttonStyle = {
-  marginTop: "2rem",
-  padding: "0.8rem 2.5rem",
-  fontSize: "1.1rem",
-  border: "none",
-  borderRadius: "10px",
-  background: "linear-gradient(90deg, #00c6fb 0%, #005bea 100%)",
-  color: "#fff",
-  cursor: "pointer",
-  transition: "background 0.2s",
-};
-
-export default function VisitCounterPage() {
-  const [visits, setVisits] = useState(0);
+const App = () => {
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    // Leer el contador previo o iniciar en 0
-    const prev = parseInt(localStorage.getItem("visits") || "0", 10);
-    const updated = prev + 1;
-    setVisits(updated);
-    localStorage.setItem("visits", updated);
+    // Leer el contador actual
+    const storedCount = parseInt(localStorage.getItem(COUNTER_KEY)) || 0;
+    // Incrementar en uno solo al cargar la página
+    const newCount = storedCount + 1;
+    localStorage.setItem(COUNTER_KEY, newCount);
+    setCounter(newCount);
   }, []);
 
-  const handleGoToNextPage = () => {
-    window.location.href = NEXT_PAGE;
+  const goToPage = () => {
+    window.location.href = DESTINATION_URL;
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={boxStyle}>
-        <h1>Bienvenido a la página</h1>
-        <p style={{ fontSize: "1.4rem" }}>
-          Has visitado esta página <strong>{visits}</strong> veces.
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          background: "rgba(255,255,255,0.85)",
+          borderRadius: "20px",
+          padding: "3rem 2.5rem",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+          maxWidth: "370px",
+          textAlign: "center",
+        }}
+      >
+        <h1 style={{ marginBottom: "1.5rem", color: "#2c3e50" }}>
+          ¡Bienvenido!
+        </h1>
+        <p style={{ fontSize: "1.1rem", marginBottom: "2rem", color: "#34495e" }}>
+          Has visitado esta página <strong>{counter}</strong> veces.
         </p>
-        <button style={buttonStyle} onClick={handleGoToNextPage}>
+        <button
+          style={{
+            background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
+            color: "#fff",
+            padding: "0.9rem 2.2rem",
+            border: "none",
+            borderRadius: "30px",
+            fontSize: "1.1rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 12px rgba(44,62,80,0.15)",
+            transition: "background 0.2s",
+          }}
+          onClick={goToPage}
+        >
           Ir a otra página
         </button>
       </div>
     </div>
   );
-}
+};
+
+export default A
