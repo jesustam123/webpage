@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from "react";
+
+const BACKGROUND_URL = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80"; // Cambia por la URL que quieras
+const NEXT_PAGE = "/otra-pagina"; // Cambia por la ruta a donde quieres ir
+
+const containerStyle = {
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundImage: `url(${BACKGROUND_URL})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  color: "#fff",
+  textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+};
+
+const boxStyle = {
+  background: "rgba(0,0,0,0.6)",
+  borderRadius: "18px",
+  padding: "2.5rem 3.5rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+};
+
+const buttonStyle = {
+  marginTop: "2rem",
+  padding: "0.8rem 2.5rem",
+  fontSize: "1.1rem",
+  border: "none",
+  borderRadius: "10px",
+  background: "linear-gradient(90deg, #00c6fb 0%, #005bea 100%)",
+  color: "#fff",
+  cursor: "pointer",
+  transition: "background 0.2s",
+};
+
+export default function VisitCounterPage() {
+  const [visits, setVisits] = useState(0);
+
+  useEffect(() => {
+    // Leer el contador previo o iniciar en 0
+    const prev = parseInt(localStorage.getItem("visits") || "0", 10);
+    const updated = prev + 1;
+    setVisits(updated);
+    localStorage.setItem("visits", updated);
+  }, []);
+
+  const handleGoToNextPage = () => {
+    window.location.href = NEXT_PAGE;
+  };
+
+  return (
+    <div style={containerStyle}>
+      <div style={boxStyle}>
+        <h1>Bienvenido a la página</h1>
+        <p style={{ fontSize: "1.4rem" }}>
+          Has visitado esta página <strong>{visits}</strong> veces.
+        </p>
+        <button style={buttonStyle} onClick={handleGoToNextPage}>
+          Ir a otra página
+        </button>
+      </div>
+    </div>
+  );
+}
