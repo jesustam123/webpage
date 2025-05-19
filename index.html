@@ -1,77 +1,82 @@
-import React, { useEffect, useState } from "react";
-
-// Cambia la URL de la imagen de fondo aquí:
-const BACKGROUND_IMAGE_URL =
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80";
-
-// Cambia la URL de destino aquí:
-const DESTINATION_URL = "https://ejemplo.com";
-
-const COUNTER_KEY = "visit_counter";
-
-const App = () => {
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    // Leer el contador actual
-    const storedCount = parseInt(localStorage.getItem(COUNTER_KEY)) || 0;
-    // Incrementar en uno solo al cargar la página
-    const newCount = storedCount + 1;
-    localStorage.setItem(COUNTER_KEY, newCount);
-    setCounter(newCount);
-  }, []);
-
-  const goToPage = () => {
-    window.location.href = DESTINATION_URL;
-  };
-
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "rgba(255,255,255,0.85)",
-          borderRadius: "20px",
-          padding: "3rem 2.5rem",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
-          maxWidth: "370px",
-          textAlign: "center",
-        }}
-      >
-        <h1 style={{ marginBottom: "1.5rem", color: "#2c3e50" }}>
-          ¡Bienvenido!
-        </h1>
-        <p style={{ fontSize: "1.1rem", marginBottom: "2rem", color: "#34495e" }}>
-          Has visitado esta página <strong>{counter}</strong> veces.
-        </p>
-        <button
-          style={{
-            background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
-            color: "#fff",
-            padding: "0.9rem 2.2rem",
-            border: "none",
-            borderRadius: "30px",
-            fontSize: "1.1rem",
-            cursor: "pointer",
-            boxShadow: "0 2px 12px rgba(44,62,80,0.15)",
-            transition: "background 0.2s",
-          }}
-          onClick={goToPage}
-        >
-          Ir a otra página
-        </button>
-      </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Estética con Contador de Visitas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            backdrop-filter: blur(1.5px);
+        }
+        .container {
+            background: rgba(0,0,0,0.5);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+        }
+        #counter {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1.2rem 0;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px #000, 0 0 25px #ffd700, 0 0 5px #ffd700;
+        }
+        .btn {
+            padding: 0.75rem 2.2rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);
+            color: #222;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-weight: 600;
+            text-shadow: 0 1px 5px #fff9;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%);
+            transform: scale(1.07);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a la Página Estética</h1>
+        <div id="counter">Visitas: <span id="visits">0</span></div>
+        <button class="btn" onclick="window.location.href='https://www.ejemplo.com'">Ir a otra página</button>
     </div>
-  );
-};
-
-export default A
+    <script>
+        // Usar LocalStorage para contar visitas por usuario (no por servidor)
+        function updateVisitCounter() {
+            let visits = localStorage.getItem('visitCounter');
+            if (!visits) {
+                visits = 1;
+            } else {
+                visits = parseInt(visits, 10) + 1;
+            }
+            localStorage.setItem('visitCounter', visits);
+            document.getElementById('visits').textContent = visits;
+        }
+        updateVisitCounter();
+    </script>
+</body>
+</html>
